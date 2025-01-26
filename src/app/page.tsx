@@ -6,7 +6,7 @@ export default function Page() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [selectedAnswer, setSelectedAnswer] = useState < number | null > (null);
 
   const questions = [
     {
@@ -1649,18 +1649,18 @@ export default function Page() {
     (q) => q.level === currentLevel
   );
 
-  const handleAnswer = (selectedIndex) => {
+  const handleAnswer = (selectedIndex: number) => {
     setSelectedAnswer(selectedIndex);
 
     // Add score if the answer is correct
     if (filteredQuestions[currentQuestionIndex].answer === selectedIndex) {
-      setScore(score + 1);
+      setScore((prevScore) => prevScore + 1);
     }
 
     // Move to the next question after 1 second
     setTimeout(() => {
       if (currentQuestionIndex < filteredQuestions.length - 1) {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
+        setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
       } else {
         setIsCompleted(true);
       }
